@@ -40,6 +40,6 @@ async def get_dispositivos():
     c.execute('SELECT * FROM dispositivos;')
     response = []
     for row in c:
-        dispositivo = {"id":row[0],"dispositivo":row[1], "led":row[2], "sensor":row[3]}
+        dispositivo = {"id":row[0],"dispositivo":row[1], "valor":row[2]}
         response.append(dispositivo)
     return response

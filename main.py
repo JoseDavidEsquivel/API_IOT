@@ -22,8 +22,24 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+class Dispositivo(BaseModel):
+    id : int
+    dispositivo : str
+    led : int
+    sensor : int
+
 
 @app.get("/")
 async def root():
     return "Conexion exitosa"
 
+@app.get("/dispositivos")
+async def get_dispositivos():
+    """Obtiene todos los contactos."""
+    c = conn.cursor()
+    c.execute('SELECT * FROM dispositivos;')
+    response = []
+    for row in c:
+        dispositivo = {"id":row[0],"dispositivo":row[1], "led":row[2], "sensor":row[3]}
+        response.append(dispositivo)
+    return response

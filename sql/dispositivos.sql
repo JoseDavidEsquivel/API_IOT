@@ -5,6 +5,9 @@ CREATE TABLE dispositivos (
 );
 
 INSERT INTO dispositivos (id, dispositivo)
-VALUES (1, 'ESP32');
+VALUES (1, 'ESP32_LED');
+
+INSERT INTO dispositivos (id, dispositivo)
+VALUES (2, 'ESP32_POTENCIOMETRO');
 
 SELECT * FROM dispositivos;

@@ -34,7 +34,7 @@ async def root():
     return "Conexion exitosa"
 
 @app.get("/dispositivos")
-async def get_dispositivos():
+async def get_all():
     """Obtiene todos los contactos."""
     c = conn.cursor()
     c.execute('SELECT * FROM dispositivos;')
@@ -43,3 +43,14 @@ async def get_dispositivos():
         dispositivo = {"id":row[0],"dispositivo":row[1], "valor":row[2]}
         response.append(dispositivo)
     return response
+
+@app.get("/dispositivos/{id}")
+async def get_dispositivo(id: int):
+    """Obtiene un contacto por su email."""
+    # Consulta el contacto por su email
+    c = conn.cursor()
+    c.execute('SELECT * FROM dispositivos WHERE id = ?', (id,))
+    dispositivo = None
+    for row in c:
+         dispositivo = {"id":row[0],"dispositivo":row[1], "valor":row[2]}
+    return dispositivo

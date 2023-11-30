@@ -25,8 +25,10 @@ app.add_middleware(
 class Dispositivo(BaseModel):
     id : int
     dispositivo : str
-    led : int
-    sensor : int
+    valor: int
+
+class DispositivoPUT(BaseModel):
+    valor: int
 
 
 @app.get("/")
@@ -53,4 +55,14 @@ async def get_dispositivo(id: int):
     dispositivo = None
     for row in c:
          dispositivo = {"id":row[0],"dispositivo":row[1], "valor":row[2]}
+    return dispositivo
+
+@app.put("/dispositivos/{id}")
+async def get_dispositivo(id: int, dispositivo: DispositivoPUT):
+    """Obtiene un contacto por su email."""
+    # Consulta el contacto por su email
+    c = conn.cursor()
+    c.execute('UPDATE dispositivos SET valor = ? WHERE id = ?;',
+              (dispositivo.valor,id))
+    conn.commit()
     return dispositivo
